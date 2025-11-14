@@ -2,8 +2,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useApp } from "./context/AppContext";
+import CourseResourcePage from "./course/[code]/page";
 
 const BRAND = {
   light: {
@@ -257,12 +257,20 @@ const TEXTS = {
 };
 
 export default function HomePage() {
-  const router = useRouter();
   const { lang, theme, isRTL, isDark } = useApp();
   const [selectedMajorCode, setSelectedMajorCode] = useState(null); // null means "show all"
+  const [currentHash, setCurrentHash] = useState('');
   
   // Always start with default order to avoid hydration mismatch
   const [faculties, setFaculties] = useState(FACULTIES);
+  
+  // Monitor hash changes
+  useEffect(() => {
+    const updateHash = () => setCurrentHash(window.location.hash.slice(1));
+    updateHash();
+    window.addEventListener('hashchange', updateHash);
+    return () => window.removeEventListener('hashchange', updateHash);
+  }, []);
   
   // Load custom order from localStorage after mount
   useEffect(() => {
@@ -330,6 +338,11 @@ export default function HomePage() {
           majorCode, // Add major code to each course for reference
         }))
       );
+
+  // If we're on a course page (hash starts with "course/"), show the course page
+  if (currentHash.startsWith('course/')) {
+    return <CourseResourcePage />;
+  }
 
   return (
     <div
@@ -515,7 +528,7 @@ export default function HomePage() {
                 return (
                   <div
                     key={course.id}
-                    onClick={() => router.push(`/course/${course.code.replace(/\s+/g, '')}`)}
+                    onClick={() => window.location.hash = `course/${course.code.replace(/\s+/g, '')}`}
                     className={
                       (isDark
                         ? "bg-slate-900/40 border-slate-800 hover:border-[#7DB4E5]/40 shadow-sm"

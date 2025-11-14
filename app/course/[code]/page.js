@@ -1,8 +1,7 @@
 // app/course/[code]/page.js
 "use client";
 
-import { useState, useMemo, use, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useApp } from "../../context/AppContext";
 
 // Course data - in production, this would come from your Strapi backend
@@ -89,13 +88,28 @@ const ALL_COURSES = {
   },
 };
 
-export default function CourseResourcePage({ params }) {
-  const router = useRouter();
+export default function CourseResourcePage() {
   const { isDark } = useApp();
   
-  // Unwrap params (Next.js 15+)
-  const unwrappedParams = use(params);
-  const courseCode = unwrappedParams.code.toUpperCase();
+  // Get course code from URL hash
+  const [courseCode, setCourseCode] = useState("");
+  
+  useEffect(() => {
+    const getCodeFromHash = () => {
+      const hash = window.location.hash.slice(1); // Remove '#'
+      const match = hash.match(/^course\/(.+)$/);
+      return match ? match[1].toUpperCase() : "";
+    };
+    
+    setCourseCode(getCodeFromHash());
+    
+    const handleHashChange = () => {
+      setCourseCode(getCodeFromHash());
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
   
   // Get course data or show 404
   const course = useMemo(() => {
@@ -317,7 +331,7 @@ export default function CourseResourcePage({ params }) {
         }>
           <div className="flex-1">
             <button
-              onClick={() => router.push('/')}
+              onClick={() => window.location.hash = ''}
               className={
                 (isDark ? "text-[#7DB4E5] hover:text-[#9CC5E9]" : "text-[#145C9E] hover:text-[#1f3d78]") +
                 " text-xs hover:underline mb-2 flex items-center gap-1 transition-all"
@@ -845,7 +859,7 @@ export default function CourseResourcePage({ params }) {
                 This course hasn&apos;t been added to our database yet. Check back soon or help us by uploading resources!
               </p>
               <button
-                onClick={() => router.push('/')}
+                onClick={() => window.location.hash = ''}
                 className={
                   (isDark ? "bg-[#7DB4E5] text-slate-950 hover:bg-[#9CC5E9]" : "bg-[#145C9E] text-white hover:bg-[#1f3d78]") +
                   " rounded-md px-4 py-2 text-sm font-medium transition"
