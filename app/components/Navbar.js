@@ -3,40 +3,15 @@
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useApp } from "../context/AppContext";
+import { useTranslation } from "react-i18next";
 import Image from "next/image";
 
 export default function Navbar({ onToggleMobileMenu, showMobileMenu = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const { lang, setLang, theme, setTheme, isRTL, isDark } = useApp();
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const t = {
-    en: {
-      appName: "JUST ARCHIVE",
-      university: "Jordan University of Science and Technology",
-      searchPlaceholder: "Search courses or PYQs...",
-      langToggle: "Arabic",
-      themeToggleLight: "Light",
-      themeToggleDark: "Dark",
-      home: "Home",
-      courses: "Courses",
-      about: "About",
-    },
-    ar: {
-      appName: "ارشيف جست",
-      university: "جامعة العلوم والتكنولوجيا الأردنية",
-      searchPlaceholder: "ابحث عن مواد أو أسئلة سنوات ...",
-      langToggle: "English",
-      themeToggleLight: "فاتح",
-      themeToggleDark: "داكن",
-      home: "الرئيسية",
-      courses: "المساقات",
-      about: "عن البنك",
-    },
-  };
-
-  const text = t[lang];
 
   return (
     <header
@@ -93,10 +68,10 @@ export default function Navbar({ onToggleMobileMenu, showMobileMenu = false }) {
             className={isRTL ? "text-right" : "text-left"}
           >
             <p className={(isDark ? "text-slate-100" : "text-slate-900") + " text-base font-semibold leading-tight"}>
-              {text.appName}
+              {t('appName')}
             </p>
             <p className={"text-sm leading-tight " + (isDark ? "text-slate-400" : "text-slate-500")}>
-              {text.university}
+              {t('university')}
             </p>
           </button>
         </div>
@@ -113,7 +88,7 @@ export default function Navbar({ onToggleMobileMenu, showMobileMenu = false }) {
               " rounded-md border px-3 py-1.5 text-sm font-medium transition"
             }
           >
-            {text.langToggle}
+            {t('langToggle')}
           </button>
 
           {/* Theme Toggle */}
@@ -125,7 +100,7 @@ export default function Navbar({ onToggleMobileMenu, showMobileMenu = false }) {
                 : "border-slate-200 hover:bg-slate-50 text-slate-700") +
               " rounded-md border px-3 py-1.5 text-sm font-medium flex items-center gap-1.5 transition"
             }
-            aria-label={isDark ? text.themeToggleLight : text.themeToggleDark}
+            aria-label={isDark ? t('themeToggleLight') : t('themeToggleDark')}
           >
             {isDark ? (
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,7 +111,7 @@ export default function Navbar({ onToggleMobileMenu, showMobileMenu = false }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             )}
-            {isDark ? text.themeToggleLight : text.themeToggleDark}
+            {isDark ? t('themeToggleLight') : t('themeToggleDark')}
           </button>
         </div>
 

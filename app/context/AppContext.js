@@ -1,10 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import "../i18n/config";
 
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
+  const { i18n } = useTranslation();
+  
   // Always start with "light" to match server-side rendering
   const [lang, setLang] = useState("en");
   const [theme, setTheme] = useState("light");
@@ -16,15 +20,19 @@ export function AppProvider({ children }) {
     const savedLang = localStorage.getItem("lang");
     const savedTheme = localStorage.getItem("theme");
     
-    if (savedLang) setLang(savedLang);
+    if (savedLang) {
+      setLang(savedLang);
+      i18n.changeLanguage(savedLang);
+    }
     if (savedTheme) setTheme(savedTheme);
-  }, []);
+  }, [i18n]);
 
   // Save preferences to localStorage when they change
   useEffect(() => {
     if (!mounted) return;
     localStorage.setItem("lang", lang);
-  }, [lang, mounted]);
+    i18n.changeLanguage(lang);
+  }, [lang, mounted, i18n]);
 
   useEffect(() => {
     if (!mounted) return;

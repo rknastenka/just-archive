@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { useApp } from "./context/AppContext";
+import { useTranslation } from "react-i18next";
 import CourseResourcePage from "./components/coursePage";
 import Navbar from "./components/Navbar";
 
@@ -218,47 +219,9 @@ const getCourseColor = (courseCode, isDark) => {
   return isDark ? colors.dark : colors.light;
 };
 
-const TEXTS = {
-  en: {
-    appName: "JUST Archive",
-    university: "Jordan University of Science and Technology",
-    searchPlaceholder: "Search courses or PYQs...",
-    majorsTitle: "Majors",
-    majorsSubtitle: "Choose your faculty/major to see its courses.",
-    selectedMajorLabel: "Selected major",
-    selectedMajorDescription:
-      "Browse all courses under this major. Later you can click a course to see PYQs, notes, and assignments.",
-    coursesIn: (name) => `Courses in ${name}`,
-    allCourses: "All Available Courses",
-    noCourses: "No courses added yet for this major.",
-    viewResources: "View resources →",
-    langToggle: "Arabic",
-    themeToggleLight: "Light",
-    themeToggleDark: "Dark",
-    showAllCourses: "Show All Courses",
-  },
-  ar: {
-    appName: "بنك جست",
-    university: "جامعة العلوم والتكنولوجيا الأردنية",
-    searchPlaceholder: "ابحث عن مواد أو أسئلة سنوات ...",
-    majorsTitle: "التخصصات",
-    majorsSubtitle: "اختر التخصص لعرض مواده.",
-    selectedMajorLabel: "التخصص المختار",
-    selectedMajorDescription:
-      "تصفّح مواد هذا التخصص. لاحقاً يمكنك فتح المادة لرؤية أسئلة السنوات والملفات.",
-    coursesIn: (name) => `المساقات في ${name}`,
-    allCourses: "جميع المساقات المتاحة",
-    noCourses: "لا يوجد مساقات مضافة لهذا التخصص حالياً.",
-    viewResources: " عرض المحتوى ←",
-    langToggle: "English",
-    themeToggleLight: "فاتح",
-    themeToggleDark: "داكن",
-    showAllCourses: "عرض جميع المساقات",
-  },
-};
-
 export default function HomePage() {
   const { lang, setLang, theme, setTheme, isRTL, isDark } = useApp();
+  const { t } = useTranslation();
   const [selectedMajorCode, setSelectedMajorCode] = useState(null); // null means "show all"
   const [currentHash, setCurrentHash] = useState('');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -305,10 +268,6 @@ export default function HomePage() {
   const [collapsedFaculties, setCollapsedFaculties] = useState(() => 
     new Set(FACULTIES.map(f => f.id))
   );
-
-  const t = {
-    ...TEXTS[lang],
-  };
 
   const toggleFaculty = (facultyId) => {
     setCollapsedFaculties(prev => {
@@ -391,10 +350,10 @@ export default function HomePage() {
                     " text-sm font-semibold"
                   }
                 >
-                  {t.majorsTitle}
+                  {t('majorsTitle')}
                 </h2>
                 <p className={(isDark ? "text-slate-500" : "text-slate-400") + " mt-0.5 text-xs"}>
-                  {t.majorsSubtitle}
+                  {t('majorsSubtitle')}
                 </p>
               </div>
               
@@ -425,7 +384,7 @@ export default function HomePage() {
                       : "text-slate-500 hover:bg-slate-50")
                   }
                 >
-                  <span className="font-medium">{t.showAllCourses}</span>
+                  <span className="font-medium">{t('showAllCourses')}</span>
                 </button>
               </div>
 
@@ -480,7 +439,7 @@ export default function HomePage() {
                   onClick={() => setLang(lang === "en" ? "ar" : "en")}
                   className={(isDark ? "text-slate-400 hover:text-slate-100" : "text-slate-500 hover:text-slate-900") + " transition-colors font-medium"}
                 >
-                  {t.langToggle}
+                  {t('langToggle')}
                 </button>
                 
                 <div className={(isDark ? "text-slate-700" : "text-slate-300") + " text-xs"}>/</div>
@@ -498,7 +457,7 @@ export default function HomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                   )}
-                  {isDark ? t.themeToggleLight : t.themeToggleDark}
+                  {isDark ? t('themeToggleLight') : t('themeToggleDark')}
                 </button>
               </div>
             </div>
@@ -554,10 +513,10 @@ export default function HomePage() {
                     " text-sm font-semibold"
                   }
                 >
-                  {t.majorsTitle}
+                  {t('majorsTitle')}
                 </h2>
                 <p className={(isDark ? "text-slate-500" : "text-slate-400") + " mt-0.5 text-xs"}>
-                  {t.majorsSubtitle}
+                  {t('majorsSubtitle')}
                 </p>
               </div>
               
@@ -591,7 +550,7 @@ export default function HomePage() {
                       : "text-slate-500 hover:bg-slate-50")
                   }
                 >
-                  <span className="font-medium">{t.showAllCourses}</span>
+                  <span className="font-medium">{t('showAllCourses')}</span>
                   {selectedMajorCode === null && (
                     <span
                       className={
@@ -601,7 +560,7 @@ export default function HomePage() {
                         " rounded-full px-2 py-0.5 text-xs font-medium"
                       }
                     >
-                      {lang === "en" ? "Selected" : "محدد"}
+                      {t('selected')}
                     </span>
                   )}
                 </button>
@@ -696,7 +655,7 @@ export default function HomePage() {
                   onClick={() => setLang(lang === "en" ? "ar" : "en")}
                   className={(isDark ? "text-slate-400 hover:text-slate-100" : "text-slate-500 hover:text-slate-900") + " transition-colors font-medium"}
                 >
-                  {t.langToggle}
+                  {t('langToggle')}
                 </button>
                 
                 <div className={(isDark ? "text-slate-700" : "text-slate-300") + " text-xs"}>/</div>
@@ -714,7 +673,7 @@ export default function HomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                   )}
-                  {isDark ? t.themeToggleLight : t.themeToggleDark}
+                  {isDark ? t('themeToggleLight') : t('themeToggleDark')}
                 </button>
               </div>
             </div>
@@ -733,8 +692,8 @@ export default function HomePage() {
                 }
               >
                 {selectedMajor
-                  ? t.coursesIn(lang === "en" ? selectedMajor.nameEn : selectedMajor.nameAr)
-                  : t.allCourses}
+                  ? t('coursesIn', { name: lang === "en" ? selectedMajor.nameEn : selectedMajor.nameAr })
+                  : t('allCourses')}
               </h2>
               
               <div className="flex items-center gap-3 w-full sm:w-auto sm:flex-1">
@@ -746,11 +705,11 @@ export default function HomePage() {
                       ? "border-slate-800 bg-slate-900/40 text-slate-100 placeholder:text-slate-500 focus:border-[#7DB4E5]"
                       : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:border-[#145C9E] focus:bg-white")
                   }
-                  placeholder={t.searchPlaceholder}
+                  placeholder={t('searchPlaceholder')}
                 />
 
                 <p className={(isDark ? "text-slate-500" : "text-slate-400") + " text-sm whitespace-nowrap"}>
-                  {courses.length} {lang === "en" ? "courses" : "مساق"}
+                  {courses.length} {t('course')}
                 </p>
               </div>
             </div>
@@ -775,7 +734,7 @@ export default function HomePage() {
                       {lang === "en" ? course.nameEn : course.nameAr}
                     </h3>
                     <p className={(isDark ? "text-slate-400" : "text-slate-400") + " mt-1 text-xs mb-3"}>
-                      {t.viewResources}
+                      {t('viewResources')}
                     </p>
                     
                     {/* Decorative lines at bottom */}
@@ -794,7 +753,7 @@ export default function HomePage() {
                 );
               })}
               {courses.length === 0 && (
-                <p className={(isDark ? "text-slate-500" : "text-slate-400") + " text-base"}>{t.noCourses}</p>
+                <p className={(isDark ? "text-slate-500" : "text-slate-400") + " text-base"}>{t('noCourses')}</p>
               )}
             </div>
           </section>
@@ -803,3 +762,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+

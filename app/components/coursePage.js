@@ -354,7 +354,7 @@ export default function CourseResourcePage() {
                 (isDark ? "text-amber-400 bg-amber-900/20" : "text-amber-600 bg-amber-50") +
                 " mt-2 text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md inline-block"
               }>
-                ⚠️ This course doesn&apos;t exist in our database yet. Resources will be added soon.
+                This course doesn&apos;t exist in our database yet. Resources will be added soon.
               </p>
             )}
           </div>
