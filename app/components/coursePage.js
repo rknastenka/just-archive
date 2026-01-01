@@ -551,23 +551,6 @@ export default function CourseResourcePage() {
                 >
                   {t('youtubePlaylists')}
                 </button>
-                <button
-                  onClick={() => {
-                    setActiveTab("reviews");
-                    setSelectedResourceId(null);
-                  }}
-                  className={`px-3 py-2 text-sm whitespace-nowrap ${
-                    activeTab === "reviews"
-                      ? isDark
-                        ? "border-b-2 border-[#7DB4E5] text-slate-100"
-                        : "border-b-2 border-[#145C9E] text-slate-900"
-                      : isDark
-                      ? "text-slate-400"
-                      : "text-slate-500"
-                  }`}
-                >
-                  {t('reviews')}
-                </button>
               </div>
             </div>
 
@@ -718,11 +701,8 @@ export default function CourseResourcePage() {
               </p>
             )}
           </div>
-        ) : activeTab === "reviews" ? (
-          // REVIEWS VIEW
-          <ReviewSystem courseCode={courseCode} />
         ) : (
-          // OLD RESOURCES VIEW
+          // RESOURCES VIEW (notes, assignments, pyq)
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.4fr]">
             {/* left list */}
             <div className={(isDark ? "bg-slate-900/40 border-slate-700" : "bg-white border-slate-200") + " rounded-lg border overflow-hidden"}>
@@ -958,6 +938,15 @@ export default function CourseResourcePage() {
                   </p>
                 )}
               </div>
+              
+              {/* Review System - Only show for Notes tab */}
+              {activeTab === "notes" && selectedResource && (
+                <ReviewSystem 
+                  courseCode={courseCode}
+                  fileId={selectedResource.id}
+                  fileName={selectedResource.name}
+                />
+              )}
             </aside>
           </div>
         )}

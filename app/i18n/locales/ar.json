@@ -65,6 +65,8 @@
   "copyright": "أرشيف جست ©",
   "courseRating": "تقييم المساق",
   "review": "تقييم",
+  "rating": "تقييم",
+  "ratings": "تقييمات",
   "allReviews": "جميع التقييمات",
   "writeReview": "اكتب تقييماً",
   "cancelReview": "إلغاء",
@@ -86,5 +88,8 @@
   "sortLowest": "الأقل تقييماً",
   "noReviewsYet": "لا توجد تقييمات بعد لهذا المساق.",
   "beFirstToReview": "كن أول من يقيّم!",
-  "anonymous": "مجهول"
+  "anonymous": "مجهول",
+  "rateThisFile": "قيّم هذا الملف",
+  "noRatingsYet": "لا توجد تقييمات بعد. كن أول من يقيّم!",
+  "thankYouForRating": "شكراً على تقييمك!"
 }

@@ -65,6 +65,8 @@
   "copyright": "Just Archive ©",
   "courseRating": "Course Rating",
   "review": "review",
+  "rating": "rating",
+  "ratings": "ratings",
   "allReviews": "All Reviews",
   "writeReview": "Write a Review",
   "cancelReview": "Cancel",
@@ -86,5 +88,8 @@
   "sortLowest": "Lowest Rated",
   "noReviewsYet": "No reviews yet for this course.",
   "beFirstToReview": "Be the first to review!",
-  "anonymous": "Anonymous"
+  "anonymous": "Anonymous",
+  "rateThisFile": "Rate This File",
+  "noRatingsYet": "No ratings yet. Be the first to rate!",
+  "thankYouForRating": "Thank you for your rating!"
 }
